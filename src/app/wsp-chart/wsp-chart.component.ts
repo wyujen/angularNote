@@ -6,6 +6,7 @@ export interface ISCurveChartConfig{
   lineLabels: string[]
   datasets: ChartDataset[]
   dateLineDisplay: boolean
+  chartWidth:number
 }
 export type ISCurveChartMap = Record<string, ISCurveChartConfig>;
 
@@ -18,18 +19,21 @@ export type ISCurveChartMap = Record<string, ISCurveChartConfig>;
 })
 
 export class WspChartComponent implements OnInit {
-  today = this.getToday();
   CHART_COLORS = {
     blue: 'rgb(54, 162, 235)',
     red: 'rgb(255, 99, 132)',
   };
+  widthPerDataPoint = 42
+  baseElementWidth = 250
+
+  today = this.getToday();
   sCurveChartMap : ISCurveChartMap = {}
+
   ngOnInit(): void {
     this.buildFakeData()
   }
 
   buildFakeData(): void {
-    // chart start-2
     const fakeMonthsLabels: string[] = [
       '2023-01',
       '2023-02',
@@ -117,7 +121,7 @@ export class WspChartComponent implements OnInit {
       lineLabels.splice(index + 1, 0, today);
       dateLineDisplay = true
     }
-
+    const chartWidth = lineLabels.length*this.widthPerDataPoint+this.baseElementWidth
     const datasets :ChartDataset[] = [
       {
         label: '預計完成',
@@ -136,15 +140,14 @@ export class WspChartComponent implements OnInit {
     return{
       lineLabels: lineLabels,
       datasets: datasets,
-      dateLineDisplay: dateLineDisplay
+      dateLineDisplay: dateLineDisplay,
+      chartWidth:chartWidth
     }
   }
 
   updateSCurveChartMap(name:string, sCurveConfig:ISCurveChartConfig):void{
     this.sCurveChartMap[name] = sCurveConfig
   }
-
-
   getToday(): string {
     const today = new Date();
     const year = today.getFullYear();
@@ -157,6 +160,5 @@ export class WspChartComponent implements OnInit {
     const index = timeArray.findIndex(time => time === currentYearMonth);
     return index;
   }
-  
 
 }
