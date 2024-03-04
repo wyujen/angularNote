@@ -1,0 +1,12 @@
+<p>wsp-chart works!</p>
+<div>
+    <jhi-line-chart
+      [title]="['A階段/土建  S-進度曲線 ', 'Stage A/Civil S-Curve']"
+      [subtitle]="'土建：界面定義完成/Civil: Interface Definition Completed'"
+      [dateValue]="today"
+
+      [lineLabels]="sCurveChartMap['fake'].lineLabels"
+      [datasets]="sCurveChartMap['fake'].datasets"
+      [dateLineDisplay]="sCurveChartMap['fake'].dateLineDisplay"
+    ></jhi-line-chart>
+  </div>
